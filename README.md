@@ -77,11 +77,23 @@ The answer is **Hybrid Identity** — and this project documents how I built it 
 - Connected to AD DS with `CORP\Administrator` credentials
 - Completed configuration — sync initiated successfully!
 
-### Day 4 — Verification *(upcoming)*
-- Verify all users appear in Azure portal with "On-premises synced: Yes"
-- Test Password Hash Sync
-- Monitor sync status via Entra Connect dashboard
+### Day 4 — Verification ✅
+- Verified all 9 users appear in Azure portal with "On-premises synced: Yes"
+- Forced an immediate sync using `Start-ADSyncSyncCycle -PolicyType Delta`
+- Confirmed sync status in Azure Sign-in logs — Result: Success ✅
+- Monitored sync status via Microsoft Entra Connect dashboard
 
+### Day 5 — Test Hybrid Identity ✅
+- Logged into Microsoft 365 (office.com) using jsmith's on-premise credentials
+- Confirmed SSO working end-to-end — corp.local credentials authenticating against Azure AD
+- Verified all synced users and groups in Azure portal
+
+### Day 6-7 — Password Hash Sync ✅
+- Changed jsmith's password on DC01 via PowerShell
+- Forced immediate sync using `Start-ADSyncSyncCycle -PolicyType Delta`
+- Verified in Azure Sign-in logs — Result: Success ✅
+- Password Hash Sync confirmed working one-way (on-premises → cloud)
+- Note: Password writeback requires Azure AD Premium P1 — not available on the free tier
 ---
 
 ## Sync Results
